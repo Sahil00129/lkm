@@ -78,7 +78,7 @@ class LoanFinanceController extends Controller
         $current_month = date('m');
         $current_year = date('Y');
 
-        $loan_details = Loan::with('Customer', 'LoanEmi')->get();
+        $loan_details = Loan::with('Customer', 'LoanEmi')->where('pending_amount','!=',0)->get();
         return view('pages.loan-emi-list', ['loan_details' => $loan_details]);
     }
 
@@ -102,6 +102,7 @@ class LoanFinanceController extends Controller
                 }
 
                 $loanemisave['loan_id'] = $request->loan_id;
+                $loanemisave['pending_amt'] = $pending_amount;
                 $loanemisave['emi_amount'] = $lona_details->emi_amount;
                 $loanemisave['emi_date'] = $emi_date;
                 $loanemisave['status'] = 1;

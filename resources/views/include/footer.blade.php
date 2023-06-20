@@ -20,7 +20,7 @@
         <!-- END: Template JS-->
 
         <!-- START: APP JS-->
-        <script src="{{asset('dist/js/app.js')}}"></script>
+        <script src="{{asset('dist/js/app.js')}}"></script> 
         <!-- END: APP JS-->
 
         <!-- START: Page Vendor JS-->
@@ -65,4 +65,12 @@
 
         <!-- START: Page Script JS-->        
         <script src="{{asset('dist/js/datatable.script.js')}}"></script>
+        <!-- END: Page Script JS-->
+
+          <!-- START: Page Vendor JS-->
+          <script src="{{asset('dist/vendors/sweetalert/sweetalert.min.js')}}"></script>
+        <!-- END: Page Vendor JS-->
+
+        <!-- START: Page Script JS-->
+        <script src="{{asset('dist/js/sweetalert.script.js')}}"></script>
         <!-- END: Page Script JS-->

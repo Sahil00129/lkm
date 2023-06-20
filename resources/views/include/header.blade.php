@@ -30,6 +30,9 @@
           <link rel="stylesheet" href="{{asset('dist/vendors/datatable/css/dataTables.bootstrap4.min.css')}}" />
         <link rel="stylesheet" href="{{asset('dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css')}}"/>
         <!-- END: Page CSS-->
+        <!-- START: Page CSS-->
+        <link rel="stylesheet" href="{{asset('dist/vendors/sweetalert/sweetalert.css')}}">
+        <!-- END: Page CSS-->
 
         <!-- START: Custom CSS-->
         <link rel="stylesheet" href="{{asset('dist/css/main.css')}}">

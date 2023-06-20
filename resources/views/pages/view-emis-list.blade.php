@@ -34,6 +34,7 @@
                                 <tr>
                                 <th>Emi Date</th>
                                 <th>Receving Date</th>
+                                <th>Pending Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,12 +48,11 @@
                                     <tr>
                                         <td>{{$emi->emi_date}}</td>
                                         <td>{{$changeformat}}</td>
-                                       
+                                        <td>{{$emi->pending_amt}}</td>
+
                                     </tr>
 
                                     @endforeach
-                                 
-
                             </tbody>
                           
                         </table>

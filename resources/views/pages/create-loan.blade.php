@@ -32,8 +32,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                            <form id="loan_finance" method="post" action="javascript:void(0)">
-                                @csrf
+                                <form id="loan_finance" method="post" action="javascript:void(0)">
+                                    @csrf
                                     <div class="form-row">
                                         <div class="col-6 mb-3">
                                             <label for="username">Customer's Name</label>
@@ -54,47 +54,52 @@
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Contact No</label>
-                                            <input type="number" class="form-control" id="contact_no" name="contact_no">
+                                            <input type="number" class="form-control" id="contact_no" name="contact_no"
+                                                required>
                                         </div>
 
                                         <div class="col-6 mb-3">
                                             <label for="username">Loan Amount</label>
 
                                             <input type="number" class="form-control" id="loanAmount" name="loan_amount"
-                                                oninput="calculateEMI()">
+                                                oninput="calculateEMI()" required>
 
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Interest Rate (Rupee):</label>
                                             <input type="number" class="form-control" id="interestRate"
-                                                name="rate_of_interest" oninput="calculateEMI()">
+                                                name="rate_of_interest" oninput="calculateEMI()" required>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Number of Months</label>
                                             <input type="number" class="form-control" id="numEMIs" name="no_of_emi"
-                                                oninput="calculateEMI()">
+                                                oninput="calculateEMI()" required>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Emi Date</label>
-                                            <input type="date" class="form-control" id="emiDate" name="emi_date">
+                                            <input type="date" class="form-control" id="emiDate" name="emi_date"
+                                                required>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Emi Amount</label>
-                                            <input type="text" class="form-control" id="emi_amount" name="emi_amount" readonly >
+                                            <input type="text" class="form-control" id="emi_amount" name="emi_amount"
+                                                readonly>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Total Interest to be Paid (₹):</label>
-                                            <input type="text" class="form-control" id="interest" name="interest_to_paid" readonly>
+                                            <input type="text" class="form-control" id="interest"
+                                                name="interest_to_paid" readonly>
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="email">Total Amount (₹):</label>
-                                            <input type="text" class="form-control" id="totalAmount" name="total_amount" readonly>
+                                            <input type="text" class="form-control" id="totalAmount" name="total_amount"
+                                                readonly>
                                         </div>
 
                                         <div class="col-12">
 
-                                            <button type="submit" class="btn btn-primary">Save</button> <button
-                                                type="submit" class="btn btn-outline-warning">Reset</button>
+                                            <button type="submit" class="btn btn-primary" id="submit">Save</button> <a
+                                                href="{{url('create-loan')}}" class="btn btn-outline-warning">Reset</a>
 
                                         </div>
                                     </div>
@@ -128,58 +133,58 @@ function calculateEMI() {
 // 
 
 $("#loan_finance").validate({
-                    rules: {
-                        name: {
-                            required: true,
-                            maxlength: 50
-                        },
-                        father_name: {
-                            required: true,
-                            maxlength: 50,
-                        },
-                        // contact_no: {
-                        //     required: true,
-                        //     maxlength: 10
-                        // },
-                    },
-                    messages: {
-                        name: {
-                            required: "Please enter customer name",
-                            maxlength: "Your name maxlength should be 50 characters long."
-                        },
-                        father_name: {
-                            required: "Please enter father name",
-                            maxlength: "The name should less than or equal to 50 characters",
-                        },
-                        // contact_no: {
-                        //     required: "Please enter phone number",
-                        //     maxlength: "Your number maxlength should be 10 characters long."
-                        // },
-                    },
-                    submitHandler: function(form) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $('#submit').html('Please Wait...');
-                        $("#submit").attr("disabled", true);
-                        $.ajax({
-                            url: "{{url('store-loan-detail')}}",
-                            type: "POST",
-                            data: $('#loan_finance').serialize(),
-                            success: function(response) {
-                                $('#submit').html('Submit');
-                                $("#submit").attr("disabled", false);
-                                if(response.success == true) {
-                                    alert(response.success_message);
-                                    window.location.href = "loan-list";
-                                }else{
-                                  alert(response.error_message);
-                                }
-                            }
-                        });
-                    }
-                })
+    rules: {
+        name: {
+            required: true,
+            maxlength: 50
+        },
+        father_name: {
+            required: true,
+            maxlength: 50,
+        },
+        // contact_no: {
+        //     required: true,
+        //     maxlength: 10
+        // },
+    },
+    messages: {
+        name: {
+            required: "Please enter customer name",
+            maxlength: "Your name maxlength should be 50 characters long."
+        },
+        father_name: {
+            required: "Please enter father name",
+            maxlength: "The name should less than or equal to 50 characters",
+        },
+        // contact_no: {
+        //     required: "Please enter phone number",
+        //     maxlength: "Your number maxlength should be 10 characters long."
+        // },
+    },
+    submitHandler: function(form) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#submit').html('Please Wait...');
+        $("#submit").attr("disabled", true);
+        $.ajax({
+            url: "{{url('store-loan-detail')}}",
+            type: "POST",
+            data: $('#loan_finance').serialize(),
+            success: function(response) {
+                $('#submit').html('Submit');
+                $("#submit").attr("disabled", false);
+                if (response.success == true) {
+                    swal('success',response.success_message,'success');
+                    window.location.href = "loan-list";
+                } else {
+                    alert(response.error_message);
+                }
+            }
+        });
+    }
+})
 </script>
 @endsection
