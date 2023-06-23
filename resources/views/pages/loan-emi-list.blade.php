@@ -51,7 +51,7 @@
                                             $current_month = date('m');
                                             $emi_date = $last_emi_date->emi_date;
                                             $date_explode = explode('-', $emi_date);
-                                            $emi_date = $date_explode[0].'-'. $current_month.'-'. $date_explode[2];
+                                            $emi_date = @$date_explode[0].'-'. @$current_month.'-'. @$date_explode[2];
                                         }else{
                                             $emi_date = $loan->emi_date;
                                         }
@@ -63,7 +63,7 @@
                                             $current_month = date('m');
                                             $emi_date = $last_emi_date->emi_date;
                                             $date_explode = explode('-', $emi_date);
-                                            $emi_date = $date_explode[0].'-'. $current_month.'-'. $date_explode[2];
+                                            $emi_date = @$date_explode[0].'-'. @$current_month.'-'. @$date_explode[2];
                                         }else{
                                             $emi_date = $loan->emi_date;
                                         }
