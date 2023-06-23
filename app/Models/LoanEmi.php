@@ -11,4 +11,9 @@ class LoanEmi extends Model
     protected $fillable = [
         'loan_id','pending_amt', 'emi_amount', 'emi_date', 'status', 'created_at', 'updated_at'
     ];
+
+    public function LoanDetails()
+    {
+        return $this->hasOne('App\Models\Loan','id','loan_id');
+    }
 }

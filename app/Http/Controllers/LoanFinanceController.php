@@ -131,6 +131,7 @@ class LoanFinanceController extends Controller
     {
 
         $Emi_details = LoanEmi::where('loan_id', $id)->get();
-        return view('pages.view-emis-list', ['Emi_details' => $Emi_details]);
+        $customer_details = Loan::with('Customer')->where('id', $id)->first();
+        return view('pages.view-emis-list', ['Emi_details' => $Emi_details, 'customer_details' => $customer_details]);
     }
 }

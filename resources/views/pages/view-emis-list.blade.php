@@ -1,6 +1,11 @@
 @extends('layouts.main')
 @section('title', 'Dashboard')
 @section('content')
+<style>
+    p {
+margin-bottom:0px;
+    }
+    </style>
 <div class="container-fluid site-width">
     <!-- START: Breadcrumbs-->
     <div class="row ">
@@ -25,7 +30,9 @@
         <div class="col-12 mt-3">
             <div class="card">
                 <div class="card-header  justify-content-between align-items-center">
-                    <h4 class="card-title">Data Tabel</h4>
+                    <p><b>Customer Name</b>: {{$customer_details->Customer->name}}</p>
+                    <p><b>Father Name</b> : {{$customer_details->Customer->father_name}}</p>
+                    <p><b>Address</b>: {{@$customer_details->Customer->address}}</p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -39,7 +46,6 @@
                             </thead>
                             <tbody>
 
-                                <tr>
                                 @foreach($Emi_details as $emi)
                                     <?php
 
@@ -49,7 +55,6 @@
                                         <td>{{$emi->emi_date}}</td>
                                         <td>{{$changeformat}}</td>
                                         <td>{{$emi->pending_amt}}</td>
-
                                     </tr>
 
                                     @endforeach
