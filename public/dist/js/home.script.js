@@ -600,7 +600,7 @@
                     {latLng: [50.95, 6.96], name: 'Cologne'},
                     {latLng: [50.11, 8.68], name: 'Frankfurt am Main'},
                     {latLng: [48.77, 9.17], name: 'Stuttgart'},
-                    {latLng: [51.23, 6.78], name: 'Düsseldorf'},
+                    {latLng: [51.23, 6.78], name: 'Dï¿½sseldorf'},
                     {latLng: [51.51, 7.46], name: 'Dortmund'},
                     {latLng: [51.45, 7.01], name: 'Essen'},
                     {latLng: [53.07, 8.80], name: 'Bremen'}
@@ -1815,45 +1815,7 @@
             }], flotChartOption);
     }
 
-    var config = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                    data: [3, 28, 67],
-                    backgroundColor: [
-                        '#1e3d73',
-                        '#17a2b8',
-                        '#ffc107'
-                    ],
-                    label: 'Dataset 1'
-                }],
-            labels: [
-                'Mobile',
-                'Desktop',
-                'Laptop'
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: true,
-                position: 'bottom',
-                labels: {
-                    fontColor: bodycolor
-                }
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            },
-        }
-    };
-    var chartjs_other_pie = document.getElementById("chartjs-other-pie");
-    if (chartjs_other_pie) {
-        var ctx = document.getElementById('chartjs-other-pie').getContext('2d');
-        window.myDoughnut = new Chart(ctx, config);
-    }
+    
 
 
 /////////////////////////////////// Analytic Chart /////////////////////

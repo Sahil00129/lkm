@@ -38,41 +38,6 @@
                                         </span> </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right border  py-0">
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0">john</p>
-                                                    <span class="text-success">New user registered.</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author2.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0">Peter</p>
-                                                    <span class="text-success">Server #12 overloaded.</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="dist/images/author3.jpg" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0">Bill</p>
-                                                    <span class="text-danger">Application error.</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li><a class="dropdown-item text-center py-2" href="#"> See All Tasks <i class="icon-arrow-right pl-2 small"></i></a></li>
                                 </ul>
 
                             </li>

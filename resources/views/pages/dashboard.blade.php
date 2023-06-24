@@ -27,10 +27,10 @@
                                         <div class="card bg-primary">
                                             <div class="card-body">
                                                 <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                                                    <i class="icon-basket icons card-liner-icon mt-2 text-white"></i>
+                                                <i class="icon-user icons card-liner-icon mt-2 text-white"></i>
                                                     <div class='card-liner-content'>
-                                                        <h2 class="card-liner-title text-white">2,390</h2>
-                                                        <h6 class="card-liner-subtitle text-white">Today's Orders</h6>                                       
+                                                        <h2 class="card-liner-title text-white">{{$total_customer}}</h2>
+                                                        <h6 class="card-liner-subtitle text-white">Total Customers</h6>                                       
                                                     </div>                                
                                                 </div>
                                                 <div id="apex_primary_chart"></div>                               
@@ -41,13 +41,13 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                                                    <i class="icon-user icons card-liner-icon mt-2"></i>
+                                                  
+                                                    <i class="icon-basket icons card-liner-icon mt-2 text-dark"></i>
                                                     <div class='card-liner-content'>
-                                                        <h2 class="card-liner-title">9,390</h2>
-                                                        <h6 class="card-liner-subtitle">Today's Visitors</h6> 
+                                                        <h2 class="card-liner-title">{{$total_Emis}}</h2>
+                                                        <h6 class="card-liner-subtitle">Current Month Emis</h6> 
                                                     </div>                                
                                                 </div>
-                                                <span class="bg-primary card-liner-absolute-icon text-white card-liner-small-tip">+4.8%</span>
                                                 <div id="apex_today_visitors"></div> 
                                             </div>
                                         </div>
@@ -58,8 +58,8 @@
                                                 <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
                                                     <i class="icon-bag icons card-liner-icon mt-2"></i>
                                                     <div class='card-liner-content'>
-                                                        <h2 class="card-liner-title">$4,390</h2>
-                                                        <h6 class="card-liner-subtitle">Today's Sale</h6> 
+                                                        <h2 class="card-liner-title">{{$pending_emis}}</h2>
+                                                        <h6 class="card-liner-subtitle">Current Month Emis Pending</h6> 
                                                     </div>                                
                                                 </div>
                                                 <div id="apex_today_sale"></div> 
@@ -72,8 +72,8 @@
                                                 <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
                                                     <span class="card-liner-icon mt-1">$</span>
                                                     <div class='card-liner-content'>
-                                                        <h2 class="card-liner-title">$4,390</h2>
-                                                        <h6 class="card-liner-subtitle">Total Profit</h6> 
+                                                        <h2 class="card-liner-title">{{$recevied_emis}}</h2>
+                                                        <h6 class="card-liner-subtitle">Current Month Emis Received</h6> 
                                                     </div>                                
                                                 </div>
                                                 <div id="apex_today_profit"></div>
@@ -82,20 +82,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6 mt-3">
-                                <div class="card">                           
-                                    <div class="card-content">
-                                        <div class="card-body">
-
-                                            <div id="apex_bar_chart" class="height-500"></div>
-                                        </div>
+                            <div class="col-12  col-lg-6 mt-3">
+                        <div class="card">                            
+                            <div class="card-content">
+                                <div class="card-body">  
+                                    <div class="height-235">
+                                        <canvas id="chartjs-other-pie"></canvas>
                                     </div>
-                                </div>
+
+                                </div> 
                             </div>
+                        </div>
+                    </div>
                         </div>
                     </div>   
 
-                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                    <!-- <div class="col-12 col-md-6 col-lg-4 mt-3">
                         <div class="card">                            
                             <div class="card-content">
                                 <div class="card-body">  
@@ -143,19 +145,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 mt-3">
-                        <div class="card">                            
-                            <div class="card-content">
-                                <div class="card-body">  
-                                    <div class="height-235">
-                                        <canvas id="chartjs-other-pie"></canvas>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div> -->
+                    
                 </div>
                 <!-- END: Card DATA-->                 
             </div>
