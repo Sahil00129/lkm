@@ -83,7 +83,7 @@
                                 @endforeach
 
                             </tbody>
-                          
+
                         </table>
                     </div>
                 </div>
@@ -93,26 +93,32 @@
     </div>
     <!-- END: Card DATA-->
 </div>
- <!-- Modal -->
- <div class="modal fade" id="receving_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle1">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            <input type="hidden" id="loan_id" name="loan_id">
-                                            Are You Sure You have Received EMIs ? </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                <button type="button" class="btn btn-primary received_emis">Yes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+<!-- Modal -->
+<div class="modal fade" id="receving_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle1">Received EMIs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="loan_id" name="loan_id">
+                Are You Sure You have Received EMIs ?
+                <div class="form-group mx-sm-3 mb-2 mt-3">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="text" class="form-control" id="remarks" placeholder="Remarks" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary received_emis">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="{{asset('dist/vendors/jquery/jquery-3.3.1.min.js')}}"></script>
 <script>
@@ -124,11 +130,17 @@ $(".pending_emi").click(function() {
 
 $(document).on('click', '.received_emis', function() {
     var loan_id = $('#loan_id').val();
+    var remarks = $('#remarks').val();
+    if(!remarks ){
+        alert('Pleasee enter remarks');
+        return false;
+    }
     $.ajax({
         type: "GET",
         url: "emi-received",
         data: {
-            loan_id: loan_id
+            loan_id: loan_id,
+            remarks:remarks
         },
         beforeSend: function() {
 

@@ -105,6 +105,7 @@ class LoanFinanceController extends Controller
                 $loanemisave['pending_amt'] = $pending_amount;
                 $loanemisave['emi_amount'] = $lona_details->emi_amount;
                 $loanemisave['emi_date'] = $emi_date;
+                $loanemisave['remarks'] = $request->remarks;
                 $loanemisave['status'] = 1;
                 $savecustomerdetails = LoanEmi::create($loanemisave);
 

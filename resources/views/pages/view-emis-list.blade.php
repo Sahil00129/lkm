@@ -42,6 +42,7 @@ margin-bottom:0px;
                                 <th>Emi Date</th>
                                 <th>Receving Date</th>
                                 <th>Pending Amount</th>
+                                <th>Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,6 +56,7 @@ margin-bottom:0px;
                                         <td>{{$emi->emi_date}}</td>
                                         <td>{{$changeformat}}</td>
                                         <td>{{$emi->pending_amt}}</td>
+                                        <td>{{$emi->remarks}}</td>
                                     </tr>
 
                                     @endforeach

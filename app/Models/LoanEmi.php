@@ -9,7 +9,7 @@ class LoanEmi extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'loan_id','pending_amt', 'emi_amount', 'emi_date', 'status', 'created_at', 'updated_at'
+        'loan_id','pending_amt', 'emi_amount','emi_date','remarks','status', 'created_at', 'updated_at'
     ];
 
     public function LoanDetails()
