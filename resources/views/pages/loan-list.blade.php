@@ -62,8 +62,8 @@
                                     <td><a href="{{ url('view-emis-list/'.$loan->id) }}"
                                             class=" btn btn-sm btn-primary ml-2">view</a>
                                         <?php 
-                                        $emi_date = explode('-',$loan->LoanDetail->emi_date);
-                                        $emi_date = $emi_date[0].'-'.$emi_date[1];
+                                        $emi_date = explode('-',@$loan->LoanDetail->emi_date);
+                                        $emi_date = @$emi_date[0].'-'.@$emi_date[1];
                                         $today_month = date('Y-m');
                                         ?>
                                         @if($today_month > $emi_date && $loan->LoanDetail->previous_status == 0)
