@@ -33,6 +33,8 @@ margin-bottom:0px;
                     <p><b>Customer Name</b>: {{$customer_details->Customer->name}}</p>
                     <p><b>Father Name</b> : {{$customer_details->Customer->father_name}}</p>
                     <p><b>Address</b>: {{@$customer_details->Customer->address}}</p>
+                    <p><b>Total EMIs</b>: {{@$customer_details->no_of_emi}}</p>
+                    <p><b>Recevied EMIs</b>: {{count($Emi_details)}}</p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -49,7 +51,6 @@ margin-bottom:0px;
 
                                 @foreach($Emi_details as $emi)
                                     <?php
-
                                      $changeformat = date('d-m-Y', strtotime($emi->created_at));
                                     ?>
                                     <tr>

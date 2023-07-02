@@ -24,7 +24,7 @@
 <!-- END: APP JS-->
 
 <!-- START: Page Vendor JS-->
-<script src="dist/vendors/raphael/raphael.min.js')}}"></script>
+<script src="{{asset('dist/vendors/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('dist/vendors/morris/morris.min.js')}}"></script>
 <script src="{{asset('dist/vendors/chartjs/Chart.min.js')}}"></script>
 <script src="{{asset('dist/vendors/starrr/starrr.js')}}"></script>
@@ -130,4 +130,6 @@ $(document).ready(function() {
         }
     });
 });
+
+
 </script>

@@ -42,11 +42,12 @@
                                     <th>EMIs Date</th>
                                     <th>Received Amount</th>
                                     <th>Pending Amount</th>
-                                    <th class="no-content">Actions</th>
+                                    <th class="no-content" style="width: 94px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($loan_details as $loan)
+
                                 <tr>
                                     <td>{{$loan->name ?? "-"}}</td>
                                     <td>{{$loan->father_name ?? "-"}}</td>
@@ -59,7 +60,18 @@
                                     <td>{{$loan->LoanDetail->received_amount ?? "-"}}</td>
                                     <td>{{$loan->LoanDetail->pending_amount ?? "-"}}</td>
                                     <td><a href="{{ url('view-emis-list/'.$loan->id) }}"
-                                            class=" btn btn-sm btn-primary ml-2">view</a></td>
+                                            class=" btn btn-sm btn-primary ml-2">view</a>
+                                        <?php 
+                                        $emi_date = explode('-',$loan->LoanDetail->emi_date);
+                                        $emi_date = $emi_date[0].'-'.$emi_date[1];
+                                        $today_month = date('Y-m');
+                                        ?>
+                                        @if($today_month > $emi_date && $loan->LoanDetail->previous_status == 0)
+                                             <button type="button"
+                                            class="btn btn-warning edit" value="{{$loan->LoanDetail->id}}"
+                                            data-amount="{{$loan->LoanDetail->total_amount}}" data-date="{{$loan->LoanDetail->emi_date}}" style="height:28px;">Edit</button>
+                                        @endif
+                                        </td>
                                 </tr>
                                 @endforeach
 
@@ -88,5 +100,103 @@
     </div>
     <!-- END: Card DATA-->
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="edit_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle1">Received EMIs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="update_previous">
+                <div class="modal-body">
+                    <input type="hidden" id="loan_id" name="loan_id">
+                    <div class="col-12 mb-3">
+                        <label for="username">Total Amount</label>
+                        <input type="text" class="form-control" name="total_amount" id="total_amount" readonly>
+
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="username">Received Amount</label>
+                        <input type="number" class="form-control" name="received_amount" id="received_amount" required>
+
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="username">From Date</label>
+                        <input type="date" class="form-control" name="" id="frm_date" readonly>
+
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="username">To Date</label>
+                        <input type="date" class="form-control" name="end_emi_date" id="end_emi_date" required>
+
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="username">Remarks</label>
+                        <input type="text" class="form-control" name="remarks" id="remarks" required>
+
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{{asset('dist/vendors/jquery/jquery-3.3.1.min.js')}}"></script>
+<script>
+$(".edit").click(function() {
+    var loan_id = $(this).val();
+    var total_amount = $(this).attr('data-amount');
+    var date = $(this).attr('data-date');
+
+    $('#edit_model').modal('show');
+    $('#loan_id').val(loan_id);
+    $('#total_amount').val(total_amount);
+    $('#frm_date').val(date);
+});
+
+// 
+$("#update_previous").submit(function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+
+    var base_url = window.location.origin;
+    $.ajax({
+        url: "update-previous-data",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        type: "POST",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $(".indicator-progress").show();
+            $(".indicator-label").hide();
+            $('.disableme').prop('disabled', true);
+        },
+        success: (data) => {
+            $('.disableme').prop('disabled', true);
+            $(".indicator-progress").hide();
+            $(".indicator-label").show();
+            if (data.success == true) {
+                swal("success", data.message, "success");
+                window.location.reload();
+            } else {
+                swal("error", data.message, "error");
+            }
+        },
+    });
+});
+</script>
+
 
 @endsection

@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('loan-emis', [LoanFinanceController::class,'loanEmi']);
     Route::any('emi-received', [LoanFinanceController::class,'emiReceived']);
     Route::any('view-emis-list/{id}', [LoanFinanceController::class, 'viewEmisList']);
+    Route::any('update-previous-data', [LoanFinanceController::class, 'updatePreviousData']);
 
     Route::any('total-amount-chart', [HomeController::class, 'totalAmountChart']);
 });
