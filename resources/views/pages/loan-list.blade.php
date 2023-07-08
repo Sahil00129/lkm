@@ -224,7 +224,7 @@ function calculateEMIMonth() {
     var $months = $enddate.getMonth() - $startdate.getMonth() + (12 * ($enddate.getFullYear() - $startdate
         .getFullYear())) + 1;
     if (emi_receve > $months) {
-        swal('error', 'Please select', 'error');
+        swal('error', 'Emi cannot be greater than current month', 'error');
         $('#count_emi').val('');
         $('#received_amount').val('');
         return false;
