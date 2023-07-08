@@ -67,11 +67,15 @@
                                         $today_month = date('Y-m');
                                         ?>
                                         @if($today_month > $emi_date && $loan->LoanDetail->previous_status == 0)
-                                             <button type="button"
-                                            class="btn btn-warning edit" value="{{$loan->LoanDetail->id}}"
-                                            data-amount="{{$loan->LoanDetail->total_amount}}" data-date="{{$loan->LoanDetail->emi_date}}" style="height:28px;">Edit</button>
+                                        <button type="button" class="btn btn-warning edit"
+                                            value="{{$loan->LoanDetail->id}}"
+                                            data-amount="{{$loan->LoanDetail->total_amount}}"
+                                            data-date="{{$loan->LoanDetail->emi_date}}"
+                                            data-total-emi="{{$loan->LoanDetail->no_of_emi}}"
+                                            data-emi-amount="{{$loan->LoanDetail->emi_amount}}"
+                                            style="height:28px;">Edit</button>
                                         @endif
-                                        </td>
+                                    </td>
                                 </tr>
                                 @endforeach
 
@@ -115,14 +119,22 @@
             <form id="update_previous">
                 <div class="modal-body">
                     <input type="hidden" id="loan_id" name="loan_id">
+                    <input type="hidden" id="total_emi" name="total_emi">
+                    <input type="hidden" id="emi_amount" name="emi_amount">
                     <div class="col-12 mb-3">
                         <label for="username">Total Amount</label>
                         <input type="text" class="form-control" name="total_amount" id="total_amount" readonly>
 
                     </div>
                     <div class="col-12 mb-3">
+                        <label for="username">No of month emi receive</label>
+                        <input type="number" class="form-control" name="count_emi" id="count_emi"
+                            oninput="calculateEMIMonth()">
+
+                    </div>
+                    <div class="col-12 mb-3">
                         <label for="username">Received Amount</label>
-                        <input type="number" class="form-control" name="received_amount" id="received_amount" required>
+                        <input type="number" class="form-control" name="received_amount" id="received_amount" readonly>
 
                     </div>
                     <div class="col-12 mb-3">
@@ -130,21 +142,21 @@
                         <input type="date" class="form-control" name="" id="frm_date" readonly>
 
                     </div>
-                    <div class="col-12 mb-3">
+                    <!-- <div class="col-12 mb-3">
                         <label for="username">To Date</label>
                         <input type="date" class="form-control" name="end_emi_date" id="end_emi_date" required>
 
-                    </div>
+                    </div> -->
                     <div class="col-12 mb-3">
                         <label for="username">Remarks</label>
                         <input type="text" class="form-control" name="remarks" id="remarks" required>
 
                     </div>
                 </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
             </form>
         </div>
     </div>
@@ -156,15 +168,19 @@ $(".edit").click(function() {
     var loan_id = $(this).val();
     var total_amount = $(this).attr('data-amount');
     var date = $(this).attr('data-date');
+    var total_emi = $(this).attr('data-total-emi');
+    var emi_amount = $(this).attr('data-emi-amount');
 
     $('#edit_model').modal('show');
     $('#loan_id').val(loan_id);
     $('#total_amount').val(total_amount);
     $('#frm_date').val(date);
+    $('#total_emi').val(total_emi);
+    $('#emi_amount').val(emi_amount);
 });
 
 // 
-$("#update_previous").submit(function (e) {
+$("#update_previous").submit(function(e) {
     e.preventDefault();
     var formData = new FormData(this);
 
@@ -178,7 +194,7 @@ $("#update_previous").submit(function (e) {
         data: new FormData(this),
         processData: false,
         contentType: false,
-        beforeSend: function () {
+        beforeSend: function() {
             $(".indicator-progress").show();
             $(".indicator-label").hide();
             $('.disableme').prop('disabled', true);
@@ -196,6 +212,27 @@ $("#update_previous").submit(function (e) {
         },
     });
 });
+
+function calculateEMIMonth() {
+    var emi_receve = $('#count_emi').val();
+    var emi_amt = $('#emi_amount').val();
+    var start_emi_date = $('#frm_date').val();
+    let currentDate = new Date().toJSON().slice(0, 10);
+
+    var $startdate = new Date($('#frm_date').val())
+    var $enddate = new Date(new Date().toJSON().slice(0, 10))
+    var $months = $enddate.getMonth() - $startdate.getMonth() + (12 * ($enddate.getFullYear() - $startdate
+        .getFullYear())) + 1;
+    if (emi_receve > $months) {
+        swal('error', 'Please select', 'error');
+        $('#count_emi').val('');
+        $('#received_amount').val('');
+        return false;
+    }
+    var receved_amt = emi_amt * emi_receve;
+    $('#received_amount').val(receved_amt.toFixed(2));
+
+}
 </script>
 
 

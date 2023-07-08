@@ -51,7 +51,7 @@ margin-bottom:0px;
 
                                 @foreach($Emi_details as $emi)
                                     <?php
-                                     $changeformat = date('d-m-Y', strtotime($emi->created_at));
+                                     $changeformat = date('d-m-Y', strtotime($emi->emi_received_date));
                                     ?>
                                     <tr>
                                         <td>{{$emi->emi_date}}</td>

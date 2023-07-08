@@ -31,7 +31,7 @@ class HomeController extends Controller
         // total emis
         $total_Emis = Loan::where('pending_amount','!=',0)->count();
         // current_month receved emis
-        $recevied_emis = LoanEmi::select('loan_id')->whereMonth('created_at',date('m'))->whereYear('created_at', date('Y'))->distinct('loan_id')->count();
+        $recevied_emis = LoanEmi::select('loan_id')->whereMonth('emi_received_date',date('m'))->whereYear('emi_received_date', date('Y'))->distinct('loan_id')->count();
         $pending_emis = $total_Emis - $recevied_emis;
 
         return view('pages.dashboard',(['total_customer' => $total_customer,'total_Emis' => $total_Emis,'recevied_emis' => $recevied_emis, 'pending_emis' => $pending_emis]));

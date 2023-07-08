@@ -33,6 +33,7 @@
                             <thead>
                                 <tr>
                                     <th>Customer Name</th>
+                                    <th>Contact No</th>
                                     <th>EMIs Amount</th>
                                     <th>EMIs Date</th>
                                     <th class="no-content">Status</th>
@@ -43,6 +44,7 @@
 
                                 <tr>
                                     <td>{{$loan->Customer->name ?? "-"}}</td>
+                                    <td>{{$loan->Customer->contact_no ?? "-"}}</td>
                                     <td>{{$loan->emi_amount ?? "-"}}</td>
                                     <?php $last_emi_date = DB::table('loan_emis')->where('loan_id', $loan->id)->orderBy('id', 'desc')->first();
                                     if (empty($loan->LoanEmi)) {
@@ -147,10 +149,10 @@ $(document).on('click', '.received_emis', function() {
         },
         success: function(data) {
             if (data.success == true) {
-                alert(data.success_message);
+                swal('success',data.success_message, 'success');
                 window.location.reload();
             } else {
-                alert(data.error_message);
+                swal('error',data.error_message,'error');
             }
 
         }

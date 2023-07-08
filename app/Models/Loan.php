@@ -18,6 +18,6 @@ class Loan extends Model
     }
     public function LoanEmi()
     {
-        return $this->hasOne('App\Models\LoanEmi','loan_id','id')->whereMonth('created_at',date('m'))->whereYear('created_at', date('Y'));
+        return $this->hasOne('App\Models\LoanEmi','loan_id','id')->whereMonth('emi_received_date',date('m'))->whereYear('emi_received_date', date('Y'));
     }
 }

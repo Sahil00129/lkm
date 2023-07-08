@@ -116,6 +116,7 @@ class LoanFinanceController extends Controller
                 $loanemisave['emi_amount'] = $lona_details->emi_amount;
                 $loanemisave['emi_date'] = $emi_date;
                 $loanemisave['remarks'] = $request->remarks;
+                $loanemisave['emi_received_date'] = date('Y-m-d');
                 $loanemisave['status'] = 1;
                 $savecustomerdetails = LoanEmi::create($loanemisave);
 
@@ -153,11 +154,12 @@ class LoanFinanceController extends Controller
             
             $get_loan_details = Loan::where('id', $request->loan_id)->first();
             $starting_emi = $get_loan_details->emi_date;
+            $end_date = date('Y-m-d', strtotime("+".$request->count_emi - 1 ." months", strtotime($starting_emi)));
 
-            $result = CarbonPeriod::create($starting_emi, '1 month', $request->end_emi_date);
+            $result = CarbonPeriod::create($starting_emi, '1 month', $end_date);
+            
 
-            foreach ($result as $dt) {
-
+            foreach ($result as $dt) { 
                 $get_loan_details = Loan::where('id', $request->loan_id)->first();
                 $starting_emi = $get_loan_details->emi_date;
 
@@ -168,6 +170,7 @@ class LoanFinanceController extends Controller
                 $loanemisave['pending_amt'] = $pending_amount;
                 $loanemisave['emi_amount'] = $get_loan_details->emi_amount;
                 $loanemisave['emi_date'] = $dt->format("Y-m-d");
+                $loanemisave['emi_received_date'] = $dt->format("Y-m-d");
                 $loanemisave['remarks'] = $request->remarks;
                 $loanemisave['status'] = 1;
                 $savecustomerdetails = LoanEmi::create($loanemisave);
@@ -178,6 +181,7 @@ class LoanFinanceController extends Controller
                 $response['success'] = true;
                 $response['error'] = false;
                 $response['success_message'] = 'Data saved successfully';
+
     
             DB::commit();
         } catch (Exception $e) {
