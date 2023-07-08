@@ -155,7 +155,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" id="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -195,14 +195,12 @@ $("#update_previous").submit(function(e) {
         processData: false,
         contentType: false,
         beforeSend: function() {
-            $(".indicator-progress").show();
-            $(".indicator-label").hide();
-            $('.disableme').prop('disabled', true);
+            $('#submit').html('Please Wait...');
+            $("#submit").attr("disabled", true);
         },
         success: (data) => {
-            $('.disableme').prop('disabled', true);
-            $(".indicator-progress").hide();
-            $(".indicator-label").show();
+            $('#submit').html('Submit');
+            $("#submit").attr("disabled", false);
             if (data.success == true) {
                 swal("success", data.message, "success");
                 window.location.reload();

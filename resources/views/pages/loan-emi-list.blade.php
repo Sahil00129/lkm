@@ -145,9 +145,12 @@ $(document).on('click', '.received_emis', function() {
             remarks:remarks
         },
         beforeSend: function() {
-
+            $('.received_emis').html('Please Wait...');
+        $(".received_emis").attr("disabled", true);
         },
         success: function(data) {
+            $('.received_emis').html('Yes');
+                $(".received_emis").attr("disabled", false);
             if (data.success == true) {
                 swal('success',data.success_message, 'success');
                 window.location.reload();
