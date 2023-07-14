@@ -30,7 +30,7 @@
                             <div class="card bg-primary">
                                 <div class="card-body">
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                                        <i class="icon-user icons card-liner-icon mt-2 text-white"></i>
+                                        <a href="{{url('loan-list')}}" ><i class="icon-user icons card-liner-icon mt-2 text-white"></i></a>
                                         <div class='card-liner-content'>
                                             <h2 class="card-liner-title text-white">{{$total_customer}}</h2>
                                             <h6 class="card-liner-subtitle text-white">Total Customers</h6>
@@ -44,8 +44,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-
-                                        <i class="icon-basket icons card-liner-icon mt-2 text-dark"></i>
+                                        <a href="{{url('loan-emis')}}" ><i class="icon-basket icons card-liner-icon mt-2 text-dark"></i></a>
                                         <div class='card-liner-content'>
                                             <h2 class="card-liner-title">{{$total_Emis}}</h2>
                                             <h6 class="card-liner-subtitle">Current Month Emis</h6>
@@ -99,7 +98,7 @@
                                     </div>
                                     <div id="apex_today_profit"></div>
                                 </div>
-                            </div>
+                            </div> 
                 </div>
             </div>
         </div>

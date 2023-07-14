@@ -16,7 +16,7 @@
                             <li><a href="#"><i class="icon-briefcase"></i> Kitty</a></li>
                            
                         </ul>
-                    </li>
+                    </li> 
 
                 </ul>
                 <!-- END: Menu-->
