@@ -32,8 +32,8 @@
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
                                         <a href="{{url('loan-list')}}" ><i class="icon-user icons card-liner-icon mt-2 text-white"></i></a>
                                         <div class='card-liner-content'>
-                                            <h2 class="card-liner-title text-white">{{$total_customer}}</h2>
-                                            <h6 class="card-liner-subtitle text-white">Total Customers</h6>
+                                        <a href="{{url('loan-list')}}" > <h2 class="card-liner-title text-white">{{$total_customer}}</h2>
+                                            <h6 class="card-liner-subtitle text-white">Total Customers</h6></a>
                                         </div>
                                     </div>
                                     <div id="apex_primary_chart"></div>
@@ -46,8 +46,8 @@
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
                                         <a href="{{url('loan-emis')}}" ><i class="icon-basket icons card-liner-icon mt-2 text-dark"></i></a>
                                         <div class='card-liner-content'>
-                                            <h2 class="card-liner-title">{{$total_Emis}}</h2>
-                                            <h6 class="card-liner-subtitle">Current Month Emis</h6>
+                                        <a href="{{url('loan-emis')}}" ><h2 class="card-liner-title">{{$total_Emis}}</h2>
+                                            <h6 class="card-liner-subtitle">Current Month Emis</h6></a>
                                         </div>
                                     </div>
                                     <div id="apex_today_visitors"></div>
@@ -66,10 +66,10 @@
                     <div class="card">
                         <div class="card-body" style="height:177px;">
                             <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                                <i class="icon-bag icons card-liner-icon mt-2"></i>
+                            <a href="{{url('loan-emis')}}" ><i class="icon-bag icons card-liner-icon mt-2"></i></a>
                                 <div class='card-liner-content'>
-                                    <h2 class="card-liner-title">{{$pending_emis}}</h2>
-                                    <h6 class="card-liner-subtitle">Current Month Emis Pending</h6>
+                                <a href="{{url('loan-emis')}}" ><h2 class="card-liner-title">{{$pending_emis}}</h2>
+                                    <h6 class="card-liner-subtitle">Current Month Emis Pending</h6></a>
                                 </div>
                             </div>
                             <div id="apex_today_sale"></div>
@@ -90,10 +90,10 @@
                 <div class="card">
                                 <div class="card-body" style="height:177px;">
                                     <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
-                                        <span class="card-liner-icon mt-1">₹</span>
+                                    <a href="{{url('loan-emis')}}" ><span class="card-liner-icon mt-1">₹</span></a>
                                         <div class='card-liner-content'>
-                                            <h2 class="card-liner-title">{{$recevied_emis}}</h2>
-                                            <h6 class="card-liner-subtitle">Current Month Emis Received</h6>
+                                        <a href="{{url('loan-emis')}}" ><h2 class="card-liner-title">{{$recevied_emis}}</h2>
+                                            <h6 class="card-liner-subtitle">Current Month Emis Received</h6></a>
                                         </div>
                                     </div>
                                     <div id="apex_today_profit"></div>
