@@ -27,9 +27,18 @@
                 <div class="card-header  justify-content-between align-items-center">
                     <h4 class="card-title">Current Month Emis</h4>
                 </div>
+                <div class="form-row" style="margin-left: 30px;">
+                    <div class="col-6 mb-3">
+                        <label for="username">Month Filter</label>
+                        <input type="month" class="form-control" name="name" id="select_month">
+                    </div>
+                    <div class="col-4 mt-3">
+                        <button type="button" class="btn btn-warning filter" style="margin-top:10px;">Filter</button>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example" class="display table dataTable table-striped table-bordered">
+                        <table id="emi_table" class="display table dataTable table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Customer Name</th>
@@ -122,6 +131,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="filter_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle1">Received EMIs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="filter_loan_id" name="filter_loan_id">
+                <input type="text" id="filter_emi_date" name="filter_emi_date">
+                Are You Sure You have Received EMIs ?
+                <div class="form-group mx-sm-3 mb-2 mt-3">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="text" class="form-control" id="filter_remarks" placeholder="Remarks" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary filter_received_emis">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="{{asset('dist/vendors/jquery/jquery-3.3.1.min.js')}}"></script>
 <script>
 $(".pending_emi").click(function() {
@@ -133,7 +169,7 @@ $(".pending_emi").click(function() {
 $(document).on('click', '.received_emis', function() {
     var loan_id = $('#loan_id').val();
     var remarks = $('#remarks').val();
-    if(!remarks ){
+    if (!remarks) {
         alert('Pleasee enter remarks');
         return false;
     }
@@ -142,20 +178,130 @@ $(document).on('click', '.received_emis', function() {
         url: "emi-received",
         data: {
             loan_id: loan_id,
-            remarks:remarks
+            remarks: remarks
         },
         beforeSend: function() {
             $('.received_emis').html('Please Wait...');
-        $(".received_emis").attr("disabled", true);
+            $(".received_emis").attr("disabled", true);
         },
         success: function(data) {
             $('.received_emis').html('Yes');
-                $(".received_emis").attr("disabled", false);
+            $(".received_emis").attr("disabled", false);
             if (data.success == true) {
-                swal('success',data.success_message, 'success');
+                swal('success', data.success_message, 'success');
                 window.location.reload();
             } else {
-                swal('error',data.error_message,'error');
+                swal('error', data.error_message, 'error');
+            }
+
+        }
+    });
+});
+$(document).on('click', '.filter', function() {
+    var select_month = $('#select_month').val();
+
+    $.ajax({
+        type: "GET",
+        url: "filter-data",
+        data: {
+            select_month: select_month,
+        },
+        beforeSend: function() {
+            $('#emi_table').dataTable().fnClearTable();
+            $('#emi_table').dataTable().fnDestroy();
+        },
+        success: function(data) {
+            console.log(data.emi_months);
+
+            $.each(data.emi_months, function(index, value) {
+
+                
+                var emi_date = value.emi_date;
+                var emi = emi_date.split("-");
+                var select_month = data.select_month + '-' + emi[2];
+
+                var date1 = new Date(data.select_month);
+                var date2 = emi[0]+ '-' + emi[1];
+                var date3 = new Date(date2)
+                if(date1 >= date3){
+
+                if (value.loan_emi_filter == '' || value.loan_emi_filter == null) {
+
+                    var button = `<button type="button" class="btn btn-danger last_month"
+                                            value="` + value.id + `" data-emi="` + select_month +
+                        `" >Pending</button></td>`;
+                } else {
+                    var button = `<button type="button" class="btn btn-success"
+                                            value="` + value.id + `" >Receive</button></td>`;
+                }
+
+                $('#emi_table tbody').append("<tr><td>" + value
+                    .customer.name + "</td><td>" + value
+                    .customer.contact_no +
+                    "</td><td>" + value.emi_amount + "</td><td>" + select_month +
+                    "</td><td>" + button + "</td></tr>");
+            }
+
+            });
+
+            (function($) {
+                "use strict";
+                var editor;
+                $('#emi_table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ],
+                    responsive: true
+                });
+
+
+
+            })(jQuery);
+
+
+        }
+
+    });
+});
+
+$(document).on('click', '.last_month', function() {
+    let dataId = $(this).attr("data-emi");
+    let loan_id = $(this).val();
+    $('#filter_model').modal('show');
+    $('#filter_loan_id').val(loan_id);
+    $('#filter_emi_date').val(dataId);
+});
+
+$(document).on('click', '.filter_received_emis', function() {
+    var loan_id = $('#filter_loan_id').val();
+    var remarks = $('#filter_remarks').val();
+    var emi_date = $('#filter_emi_date').val();
+
+    if (!remarks) {
+        alert('Pleasee enter remarks');
+        return false;
+    }
+    $.ajax({
+        type: "GET",
+        url: "previous-month-emi",
+        data: {
+            loan_id: loan_id,
+            remarks: remarks,
+            emi_date: emi_date
+        },
+        beforeSend: function() {
+            $('.filter_received_emis').html('Please Wait...');
+            $(".filter_received_emis").attr("disabled", true);
+        },
+        success: function(data) {
+            $('.filter_received_emis').html('Yes');
+            $(".filter_received_emis").attr("disabled", false);
+            if (data.success == true) {
+                swal('success', data.success_message, 'success');
+                window.location.reload();
+            } else {
+                swal('error', data.error_message, 'error');
             }
 
         }

@@ -86,7 +86,7 @@ class LoanFinanceController extends Controller
     public function loanEmi()
     {
         $current_month = date('m');
-        $current_year = date('Y');
+        $current_year = date('Y'); 
 
         $loan_details = Loan::with('Customer', 'LoanEmi')->where('pending_amount', '!=', 0)->get();
         return view('pages.loan-emi-list', ['loan_details' => $loan_details]);
@@ -183,6 +183,91 @@ class LoanFinanceController extends Controller
                 $response['success_message'] = 'Data saved successfully';
 
     
+            DB::commit();
+        } catch (Exception $e) {
+            $response['error'] = false;
+            $response['error_message'] = $e;
+            $response['success'] = false;
+            $response['redirect_url'] = $url;
+        }
+        return response()->json($response);
+
+    }
+
+    public function filterData(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            
+          $break = explode('-',$request->select_month);
+          $month = $break[1];
+          $year = $break[0];
+
+          $emi_months = Loan::with(['Customer', 'LoanEmiFilter' => function ($query) use ($month,$year) {
+              $query->whereMonth('emi_date', $month)
+                  ->whereYear('emi_date', $year);
+          }])->get();
+
+        if ($emi_months) {
+            $response['success'] = true;
+            $response['emi_months'] = $emi_months;
+            $response['select_month'] = $request->select_month;
+            $response['error'] = false;
+            $response['success_message'] = 'Data saved successfully';
+        } else {
+            $response['success'] = false;
+            $response['error'] = true;
+            $response['error_message'] = "Can not import consignees please try again";
+        }
+
+    
+            DB::commit();
+        } catch (Exception $e) {
+            $response['error'] = false;
+            $response['error_message'] = $e;
+            $response['success'] = false;
+            $response['redirect_url'] = $url;
+        }
+        return response()->json($response);
+
+    }
+    public function previousMonthEmi(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $lona_details = Loan::where('id', $request->loan_id)->first();
+            $pending_amount = $lona_details->pending_amount - $lona_details->emi_amount;
+            $received_amount = $lona_details->received_amount + $lona_details->emi_amount;
+            $updatdetails = Loan::where('id', $request->loan_id)->update(['pending_amount' => $pending_amount, 'received_amount' => $received_amount]);
+
+            if ($updatdetails) {
+                $last_month_date = LoanEmi::where('loan_id', $request->loan_id)->orderBy('id', 'desc')->first();
+                if (!empty($last_month_date)) {
+                    $last_date = $last_month_date->emi_date;
+                    $emi_date = date("Y-m-d", strtotime($last_date . ' + 1 month'));
+                } else {
+                    $emi_date = $lona_details->emi_date;
+                }
+
+                $loanemisave['loan_id'] = $request->loan_id;
+                $loanemisave['pending_amt'] = $pending_amount;
+                $loanemisave['emi_amount'] = $lona_details->emi_amount;
+                $loanemisave['emi_date'] = $request->emi_date;
+                $loanemisave['remarks'] =  $request->remarks;
+                $loanemisave['emi_received_date'] = $request->emi_date;
+                $loanemisave['status'] = 1;
+                $savecustomerdetails = LoanEmi::create($loanemisave);
+
+                $response['success'] = true;
+                $response['error'] = false;
+                $response['success_message'] = 'Data saved successfully';
+            } else {
+                $response['success'] = false;
+                $response['error'] = true;
+                $response['error_message'] = "Can not import consignees please try again";
+            }
+
             DB::commit();
         } catch (Exception $e) {
             $response['error'] = false;
