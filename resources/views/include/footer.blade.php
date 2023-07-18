@@ -131,5 +131,19 @@ $(document).ready(function() {
     });
 });
 
+(function ($) {
+    "use strict";
+var editor;
+ $('#emi_table').DataTable({
+    dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+     responsive: true
+ });
+ 
+  
+
+})(jQuery);
 
 </script>
