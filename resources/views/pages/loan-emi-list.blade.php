@@ -143,7 +143,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="filter_loan_id" name="filter_loan_id">
-                <input type="text" id="filter_emi_date" name="filter_emi_date">
+                <input type="hidden" id="filter_emi_date" name="filter_emi_date">
                 Are You Sure You have Received EMIs ?
                 <div class="form-group mx-sm-3 mb-2 mt-3">
                     <label for="inputPassword2" class="sr-only">Password</label>
