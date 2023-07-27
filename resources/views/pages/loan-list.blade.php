@@ -42,7 +42,7 @@
                                     <th>EMIs Date</th>
                                     <th>Received Amount</th>
                                     <th>Pending Amount</th>
-                                    <th class="no-content" style="width: 94px;">Actions</th>
+                                    <th class="no-content" style="width: 123px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,25 +60,27 @@
                                     <td>{{$loan->LoanDetail->received_amount ?? "-"}}</td>
                                     <td>{{$loan->LoanDetail->pending_amount ?? "-"}}</td>
                                     <td><a href="{{ url('view-emis-list/'.$loan->id) }}"
-                                            class=" btn btn-sm btn-primary ml-2">view</a>
+                                    class="btn btn-outline-primary"><i class="fa fa-eye" ></i></a>
                                         <?php 
                                         $emi_date = explode('-',@$loan->LoanDetail->emi_date);
                                         $emi_date = @$emi_date[0].'-'.@$emi_date[1];
                                         $today_month = date('Y-m');
                                         ?>
                                         @if($today_month > $emi_date && $loan->LoanDetail->previous_status == 0)
-                                        <button type="button" class="btn btn-warning edit"
+                                        <button type="button" class="btn btn-outline-warning edit"
                                             value="{{$loan->LoanDetail->id}}"
                                             data-amount="{{$loan->LoanDetail->total_amount}}"
                                             data-date="{{$loan->LoanDetail->emi_date}}"
                                             data-total-emi="{{$loan->LoanDetail->no_of_emi}}"
                                             data-emi-amount="{{$loan->LoanDetail->emi_amount}}"
-                                            style="height:28px;">Edit</button>
+                                            ><i class="fa fa-edit" ></i></button>
                                         @endif
+                                        <button type="button" class="btn btn-outline-danger delete_loan" value="{{$loan->id}}" ><i class="fa fa-trash" ></i></button>
+                                        
                                     </td>
                                 </tr>
                                 @endforeach
-
+                               
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -161,6 +163,29 @@
         </div>
     </div>
 </div>
+<!--  -->
+<div class="modal fade" id="confirm_delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle1">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="loan_id_delete" name="loan_id_delete">
+                Are You Sure You Want to delete This Loan ?
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary confirm_delete">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="{{asset('dist/vendors/jquery/jquery-3.3.1.min.js')}}"></script>
 <script>
@@ -231,6 +256,37 @@ function calculateEMIMonth() {
     $('#received_amount').val(receved_amt.toFixed(2));
 
 }
+$(".delete_loan").click(function() {
+    var loan_id = $(this).val();
+    $('#confirm_delete_modal').modal('show');
+    $('#loan_id_delete').val(loan_id);
+
+});
+
+$(".confirm_delete").click(function() {
+    var loan_id = $('#loan_id_delete').val();
+   
+    $.ajax({
+        url: "delete-loan",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        type: "POST",
+        data: {
+            loan_id:loan_id
+        },
+      
+        success: (data) => {
+          
+            if (data.success == true) {
+                swal("success", data.message, "success");
+                window.location.reload();
+            } else {
+                swal("error", data.message, "error");
+            }
+        },
+    });
+});
 </script>
 
 
