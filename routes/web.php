@@ -48,4 +48,5 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::any('total-amount-chart', [HomeController::class, 'totalAmountChart']);
     Route::any('filter-data', [LoanFinanceController::class, 'filterData']);
+    Route::any('delete-loan', [LoanFinanceController::class, 'deleteLoan']);
 });

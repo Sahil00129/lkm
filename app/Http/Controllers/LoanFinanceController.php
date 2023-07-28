@@ -64,7 +64,7 @@ class LoanFinanceController extends Controller
             } else {
                 $response['success'] = false;
                 $response['error'] = true;
-                $response['error_message'] = "Can not import consignees please try again";
+                $response['error_message'] = "Can not please try again";
             }
 
             DB::commit();
@@ -126,7 +126,7 @@ class LoanFinanceController extends Controller
             } else {
                 $response['success'] = false;
                 $response['error'] = true;
-                $response['error_message'] = "Can not import consignees please try again";
+                $response['error_message'] = "Can not please try again";
             }
 
             DB::commit();
@@ -217,7 +217,7 @@ class LoanFinanceController extends Controller
         } else {
             $response['success'] = false;
             $response['error'] = true;
-            $response['error_message'] = "Can not import consignees please try again";
+            $response['error_message'] = "Can not please try again";
         }
 
     
@@ -265,9 +265,37 @@ class LoanFinanceController extends Controller
             } else {
                 $response['success'] = false;
                 $response['error'] = true;
-                $response['error_message'] = "Can not import consignees please try again";
+                $response['error_message'] = "Can not please try again";
             }
 
+            DB::commit();
+        } catch (Exception $e) {
+            $response['error'] = false;
+            $response['error_message'] = $e;
+            $response['success'] = false;
+            $response['redirect_url'] = $url;
+        }
+        return response()->json($response);
+
+    }
+
+    public function deleteLoan(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $customer_delete = Customer::where('id', $request->loan_id)->delete();
+            $loan_delete = loan::where('customer_id', $request->loan_id)->delete();
+      
+
+        if ($loan_delete) {
+            $response['success'] = true;
+            $response['error'] = false;
+            $response['success_message'] = 'Loan Deleted successfully';
+        } else {
+            $response['success'] = false;
+            $response['error'] = true;
+            $response['error_message'] = "Can not import consignees please try again";
+        }
             DB::commit();
         } catch (Exception $e) {
             $response['error'] = false;
